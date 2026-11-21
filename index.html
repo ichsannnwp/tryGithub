@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Git Clone & Live Share Lab</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <!-- Background decorative light gradients -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-indigo-600/20 rounded-full blur-[140px]"></div>
+    <div class="absolute top-1/3 -left-40 w-[500px] h-[400px] bg-violet-600/15 rounded-full blur-[120px]"></div>
+    <div class="absolute -bottom-20 -right-20 w-[600px] h-[500px] bg-emerald-600/10 rounded-full blur-[130px]"></div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header class="border-b border-slate-800/80 sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <i class="fa-brands fa-git-alt text-2xl text-white"></i>
+        </div>
+        <div>
+          <span class="font-bold text-lg text-white tracking-tight flex items-center gap-2">
+            GitLab Practice
+            <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full font-mono">v1.0</span>
+          </span>
+          <p class="text-[11px] text-slate-400">Media Praktek Git Clone & Kolaborasi Live Share</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- Live Status Badge -->
+        <div class="hidden sm:flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-full">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-indicator"></span>
+          <span class="text-xs font-semibold text-emerald-300">Live Ready</span>
+          <span class="text-xs text-slate-400 font-mono" id="liveClock">--:--:--</span>
+        </div>
+
+        <a href="#tutorial" class="text-xs font-medium px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 transition shadow-sm text-white flex items-center gap-1.5">
+          <i class="fa-solid fa-play text-[10px]"></i> Mulai Praktek
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+    <section class="text-center max-w-3xl mx-auto pt-4 space-y-5">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/90 border border-slate-700 text-xs text-slate-300">
+        <i class="fa-solid fa-code-branch text-indigo-400"></i>
+        <span>URL Lokal: <strong id="hostInfo" class="text-indigo-300 font-mono">Memuat...</strong></span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+        Web Sederhana untuk <br />
+        <span class="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
+          Praktek Git Clone & Live Share
+        </span>
+      </h1>
+
+      <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+        Selamat! Halaman web ini berjalan aktif. Gunakan repository ini untuk belajar melakukan <strong class="text-slate-200">Git Cloning</strong>, 
+        berkolaborasi langsung lewat <strong class="text-slate-200">VS Code Live Share</strong>, dan menambahkan profilmu ke daftar kontributor di bawah ini.
+      </p>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex flex-wrap justify-center gap-3 pt-2">
+        <a href="#tutorial" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-medium text-sm transition shadow-lg shadow-indigo-600/25 flex items-center gap-2">
+          <i class="fa-solid fa-list-check"></i> Alur Belajar Git
+        </a>
+        <a href="#liveshare" class="px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 font-medium text-sm transition flex items-center gap-2">
+          <i class="fa-solid fa-tower-broadcast text-emerald-400"></i> Panduan Live Share
+        </a>
+        <a href="#contributors" class="px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 font-medium text-sm transition flex items-center gap-2">
+          <i class="fa-solid fa-users text-amber-400"></i> Lihat Kontributor
+        </a>
+      </div>
+    </section>
+
+    <!-- Checklist & Langkah Praktek Git -->
+    <section id="tutorial" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm border border-indigo-500/30">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </span>
+            Misi Praktek: 5 Langkah Menjadi Git Explorer
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">Centang setiap langkah setelah kamu berhasil menyelesaikannya</p>
+        </div>
+        <div class="text-right flex flex-col items-end">
+          <span class="text-xs font-semibold text-indigo-400" id="checklistProgress">0/5 Selesai (0%)</span>
+          <div class="w-36 h-2 bg-slate-800 rounded-full mt-1.5 overflow-hidden">
+            <div id="checklistProgressBar" class="h-full bg-gradient-to-r from-indigo-500 to-emerald-400 transition-all duration-300 w-0"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Steps Grid -->
+      <div class="space-y-4">
+        <!-- Step 1 -->
+        <div class="glass-panel-card p-5 rounded-2xl flex items-start gap-4">
+          <input type="checkbox" class="task-check mt-1 w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-slate-900 cursor-pointer" />
+          <div class="flex-grow space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-white text-base">1. Clone Repository ke Komputermu</h3>
+              <span class="text-xs font-mono bg-slate-800 text-slate-400 px-2 py-0.5 rounded">Langkah 1</span>
+            </div>
+            <p class="text-xs text-slate-400">Buka terminal di komputermu, arahkan ke folder yang kamu inginkan, lalu jalankan perintah clone:</p>
+            <div class="bg-slate-900/90 rounded-xl p-3 border border-slate-800 flex items-center justify-between font-mono text-xs sm:text-sm text-indigo-300">
+              <code>git clone &lt;URL_REPOSITORY_INI&gt;</code>
+              <button onclick="copyCommand('git clone <URL_REPOSITORY_INI>', this)" class="text-slate-400 hover:text-white px-2 py-1 bg-slate-800 rounded border border-slate-700 transition">
+                <i class="fa-regular fa-copy"></i> Salin
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass-panel-card p-5 rounded-2xl flex items-start gap-4">
+          <input type="checkbox" class="task-check mt-1 w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-slate-900 cursor-pointer" />
+          <div class="flex-grow space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-white text-base">2. Buka Folder & Buat Branch Baru</h3>
+              <span class="text-xs font-mono bg-slate-800 text-slate-400 px-2 py-0.5 rounded">Langkah 2</span>
+            </div>
+            <p class="text-xs text-slate-400">Masuk ke dalam folder project lalu buat branch kerja dengan namamu:</p>
+            <div class="bg-slate-900/90 rounded-xl p-3 border border-slate-800 flex items-center justify-between font-mono text-xs sm:text-sm text-indigo-300">
+              <code>git checkout -b fitur-kontribusi-nama-kamu</code>
+              <button onclick="copyCommand('git checkout -b fitur-kontribusi-nama-kamu', this)" class="text-slate-400 hover:text-white px-2 py-1 bg-slate-800 rounded border border-slate-700 transition">
+                <i class="fa-regular fa-copy"></i> Salin
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass-panel-card p-5 rounded-2xl flex items-start gap-4">
+          <input type="checkbox" class="task-check mt-1 w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-slate-900 cursor-pointer" />
+          <div class="flex-grow space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-white text-base">3. Modifikasi File <span class="text-indigo-400 font-mono">contributors.json</span></h3>
+              <span class="text-xs font-mono bg-slate-800 text-slate-400 px-2 py-0.5 rounded">Langkah 3</span>
+            </div>
+            <p class="text-xs text-slate-400">Buka file <code class="text-amber-300">contributors.json</code> di teks editor kamu, tambahkan datamu ke dalam array JSON:</p>
+            <div class="bg-slate-900/90 rounded-xl p-3.5 border border-slate-800 text-xs font-mono text-slate-300 overflow-x-auto">
+<pre>{
+  "name": "Nama Lengkap Kamu",
+  "role": "Git Explorer / Siswa",
+  "github": "username_github_kamu",
+  "badge": "Contributor",
+  "quote": "Praktek git cloning berjalan sukses!"
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="glass-panel-card p-5 rounded-2xl flex items-start gap-4">
+          <input type="checkbox" class="task-check mt-1 w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-slate-900 cursor-pointer" />
+          <div class="flex-grow space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-white text-base">4. Commit Perubahanmu</h3>
+              <span class="text-xs font-mono bg-slate-800 text-slate-400 px-2 py-0.5 rounded">Langkah 4</span>
+            </div>
+            <p class="text-xs text-slate-400">Simpan perubahan ke riwayat Git:</p>
+            <div class="bg-slate-900/90 rounded-xl p-3 border border-slate-800 flex items-center justify-between font-mono text-xs sm:text-sm text-indigo-300">
+              <code>git add . && git commit -m "feat: tambah profil kontributor baru"</code>
+              <button onclick="copyCommand('git add . && git commit -m &quot;feat: tambah profil kontributor baru&quot;', this)" class="text-slate-400 hover:text-white px-2 py-1 bg-slate-800 rounded border border-slate-700 transition">
+                <i class="fa-regular fa-copy"></i> Salin
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="glass-panel-card p-5 rounded-2xl flex items-start gap-4">
+          <input type="checkbox" class="task-check mt-1 w-5 h-5 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-slate-900 cursor-pointer" />
+          <div class="flex-grow space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-white text-base">5. Push ke GitHub & Buat Pull Request</h3>
+              <span class="text-xs font-mono bg-slate-800 text-slate-400 px-2 py-0.5 rounded">Langkah 5</span>
+            </div>
+            <p class="text-xs text-slate-400">Kirim perubahan branch ke GitHub lalu buka Pull Request agar kode digabungkan:</p>
+            <div class="bg-slate-900/90 rounded-xl p-3 border border-slate-800 flex items-center justify-between font-mono text-xs sm:text-sm text-indigo-300">
+              <code>git push origin fitur-kontribusi-nama-kamu</code>
+              <button onclick="copyCommand('git push origin fitur-kontribusi-nama-kamu', this)" class="text-slate-400 hover:text-white px-2 py-1 bg-slate-800 rounded border border-slate-700 transition">
+                <i class="fa-regular fa-copy"></i> Salin
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Share & Port Forwarding Guide -->
+    <section id="liveshare" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <div class="flex items-center gap-3 pb-4 border-b border-slate-800">
+        <span class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg border border-emerald-500/30">
+          <i class="fa-solid fa-satellite-dish"></i>
+        </span>
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white">Cara Menjalankan Live Share & Buka di Browser</h2>
+          <p class="text-xs sm:text-sm text-slate-400">Bagikan sesi coding secara real-time ke teman atau audiens</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- Card 1 -->
+        <div class="glass-panel-card p-5 rounded-2xl space-y-3">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold flex items-center justify-center text-sm">1</div>
+          <h3 class="font-bold text-white text-base">Jalankan Web Server Lokal</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Di terminal proyek ini, jalankan server bawaan Python:
+          </p>
+          <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800 font-mono text-xs text-indigo-300 flex items-center justify-between">
+            <span>python3 -m http.server 3000</span>
+            <button onclick="copyCommand('python3 -m http.server 3000', this)" class="text-slate-400 hover:text-white ml-2">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+          <p class="text-[11px] text-emerald-400">
+            <i class="fa-solid fa-circle-check"></i> Lalu buka <a href="http://localhost:3000" target="_blank" class="underline font-mono">http://localhost:3000</a>
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-panel-card p-5 rounded-2xl space-y-3">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold flex items-center justify-center text-sm">2</div>
+          <h3 class="font-bold text-white text-base">Buka Sesi Live Share</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Instal extension <strong>Live Share</strong> di VS Code. Klik ikon <strong>Live Share</strong> di sidebar kiri atau status bar bawah, lalu pilih <strong>Share</strong>.
+          </p>
+          <div class="bg-slate-900/60 p-2.5 rounded-lg border border-slate-800 text-[11px] text-slate-300">
+            Link kolaborasi akan otomatis disalin ke clipboard untuk kamu bagikan ke teman.
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-panel-card p-5 rounded-2xl space-y-3">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600/30 text-indigo-300 font-bold flex items-center justify-center text-sm">3</div>
+          <h3 class="font-bold text-white text-base">Share Port (Buka di Browser Teman)</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Agar temanmu bisa membuka web ini di browser mereka tanpa perlu instal server:
+          </p>
+          <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
+            <li>Buka tab <strong>Live Share</strong> di VS Code</li>
+            <li>Klik menu <strong>Share Server...</strong></li>
+            <li>Masukkan port <code>3000</code></li>
+          </ul>
+          <p class="text-[11px] text-indigo-300">
+            🎉 Temanmu bisa langsung buka <code>http://localhost:3000</code> di browser mereka!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contributor Showcase -->
+    <section id="contributors" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-users text-indigo-400"></i>
+            Daftar Kontributor Latihan
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400">Data dimuat langsung secara dinamis dari file <code>contributors.json</code></p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="text-xs text-slate-400">Total Kontributor:</span>
+          <span id="contributorCount" class="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+            Memuat...
+          </span>
+        </div>
+      </div>
+
+      <!-- Dynamic Contributor Grid -->
+      <div id="contributorsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Rendered by script.js -->
+      </div>
+
+      <!-- Instruction note -->
+      <div class="bg-indigo-950/40 border border-indigo-500/30 rounded-2xl p-4 flex items-start space-x-3">
+        <i class="fa-solid fa-lightbulb text-amber-400 mt-1"></i>
+        <div class="text-xs sm:text-sm text-slate-300">
+          <strong class="text-white">Tantangan Praktek:</strong> Buka file <code>contributors.json</code>, salin satu blok objek kontributor, ganti dengan namamu dan pesanmu, lalu simpan file. Refresh halaman ini untuk melihat namamu langsung tampil!
+        </div>
+      </div>
+    </section>
+
+    <!-- Git Cheat Sheet -->
+    <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <div class="flex items-center gap-3 pb-4 border-b border-slate-800">
+        <span class="w-10 h-10 rounded-xl bg-violet-500/20 text-violet-400 flex items-center justify-center text-lg border border-violet-500/30">
+          <i class="fa-solid fa-terminal"></i>
+        </span>
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white">Git Cheat Sheet Penting</h2>
+          <p class="text-xs sm:text-sm text-slate-400">Perintah-perintah dasar yang paling sering dipakai</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Command 1 -->
+        <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-semibold text-slate-400">Mengecek status perubahan file</div>
+            <code class="text-sm font-mono text-indigo-300 font-bold">git status</code>
+          </div>
+          <button onclick="copyCommand('git status', this)" class="text-xs px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 transition">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+
+        <!-- Command 2 -->
+        <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-semibold text-slate-400">Melihat daftar branch</div>
+            <code class="text-sm font-mono text-indigo-300 font-bold">git branch -a</code>
+          </div>
+          <button onclick="copyCommand('git branch -a', this)" class="text-xs px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 transition">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+
+        <!-- Command 3 -->
+        <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-semibold text-slate-400">Menarik perubahan terbaru</div>
+            <code class="text-sm font-mono text-indigo-300 font-bold">git pull origin main</code>
+          </div>
+          <button onclick="copyCommand('git pull origin main', this)" class="text-xs px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 transition">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+
+        <!-- Command 4 -->
+        <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-semibold text-slate-400">Melihat riwayat commit</div>
+            <code class="text-sm font-mono text-indigo-300 font-bold">git log --oneline -n 5</code>
+          </div>
+          <button onclick="copyCommand('git log --oneline -n 5', this)" class="text-xs px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 transition">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/80 bg-slate-950/60 py-6 mt-12 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p>Dibuat untuk kebutuhan workshop, praktikum, dan pembelajaran kolaborasi Git & VS Code Live Share.</p>
+      <p class="text-slate-600 font-mono">Dikelola oleh <strong class="text-slate-400">ichsannnwp</strong> & komunitas belajar.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification element -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 flex items-center space-x-3 px-4 py-3 rounded-2xl bg-slate-900/95 border border-emerald-500/50 shadow-2xl backdrop-blur-md transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+    <span id="toastMessage" class="text-xs sm:text-sm font-medium text-slate-200">Perintah disalin!</span>
+  </div>
+
+  <!-- Main JavaScript logic -->
+  <script src="script.js"></script>
+</body>
+</html>

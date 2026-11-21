@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Ichsan Wahyu (ichsannnwp)",
+    "role": "Project Maintainer",
+    "github": "ichsannnwp",
+    "badge": "Host",
+    "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
+    "quote": "Selamat datang di repository latihan Git! Silakan clone, modifikasi, dan bagikan via Live Share."
+  },
+  {
+    "name": "Git Explorer",
+    "role": "First Contributor",
+    "github": "octocat",
+    "badge": "Learner",
+    "avatar": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=150&q=80",
+    "quote": "Latihan git clone pertama kali berhasil dengan lancar!"
+  }
+]
